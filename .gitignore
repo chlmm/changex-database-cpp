@@ -2,5 +2,8 @@ build/
 3rdParty/
 3rdSourceCode/
 pmt/
-doc/
-*.md
+# Ignore 3rd party markdown files
+3rdSourceCode/**/*.md
+3rdSourceCode/.github/**/*.md
+# Ignore project management markdown
+pmt/*.md
