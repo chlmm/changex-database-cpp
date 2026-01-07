@@ -145,3 +145,21 @@ cmake ..
 - Qt: 5.12.12
 - C++: 17
 - CMake: 3.14+
+
+  建议的项目结构
+
+  UniversalDB/
+  ├── Core/                    # 纯C++标准库实现
+  │   ├── DBInterface          # 数据库接口
+  │   ├── DBFactory            # 数据库工厂
+  │   ├── RedisDriver/         # Redis驱动
+  │   └── Types/               # 标准类型定义
+  ├── Adapters/                # 框架适配器层
+  │   ├── QtAdapter/          # Qt适配器
+  │   │   ├── QtTypeConverter # Qt类型转换
+  │   │   └── QtDBManager     # Qt风格接口
+  │   ├── BoostAdapter/       # Boost适配器（未来）
+  │   └── StandardAdapter/    # STL适配器（未来）
+  └── Examples/                # 示例项目
+      ├── pure_cpp/           # 纯C++示例
+      └── qt_app/             # Qt应用示例
