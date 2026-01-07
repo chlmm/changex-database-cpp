@@ -8,29 +8,21 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 # Find Qt 5.12.12
-find_package(Qt5 REQUIRED COMPONENTS Core Network)
+find_package(Qt5 REQUIRED COMPONENTS Core Network Gui)
 
-# ============ 3rdParty 配置开始 ============
-set(THIRD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/3rdParty)
-set(THIRD_PARTY_HIREDIS_DIR ${THIRD_PARTY_DIR}/hiredis)
-set(THIRD_PARTY_REDISPP_DIR ${THIRD_PARTY_DIR}/redis-plus-plus)
+# ============ 3rdParty 配置 ============
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/3rdparty.cmake)
 
-# 添加 3rdParty 的 include 路径
-include_directories(
-    ${THIRD_PARTY_HIREDIS_DIR}/include
-    ${THIRD_PARTY_REDISPP_DIR}/include
-)
-
-# 添加 3rdParty 的 lib 路径到链接器搜索路径
-link_directories(
-    ${THIRD_PARTY_HIREDIS_DIR}/lib
-    ${THIRD_PARTY_REDISPP_DIR}/lib
-)
-
-message(STATUS "3rdParty libraries configured in: ${THIRD_PARTY_DIR}")
-message(STATUS "If 3rdParty libraries are missing, run: ./scripts/setup_3rdparty.sh")
-# ============ 3rdParty 配置结束 ============
+# ============ 编译选项配置 ============
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/build_options.cmake)
 
 # Add subdirectories
 add_subdirectory(RedisModule)
-add_subdirectory(example)
+
+if(BUILD_BASE_EXAMPLES)
+    add_subdirectory(example/base_examples)
+endif()
+
+if(BUILD_IMAGE_MANAGEMENT)
+    add_subdirectory(example/image_management)
+endif()
