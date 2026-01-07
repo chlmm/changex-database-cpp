@@ -1,0 +1,6 @@
+build/
+3rdParty/
+3rdSourceCode/
+pmt/
+doc/
+*.md
