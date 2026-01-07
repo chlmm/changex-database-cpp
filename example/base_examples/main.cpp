@@ -17,16 +17,16 @@ void printMenu()
     qDebug() << "\nQt Redis Plus Plus Extended Demo";
     qDebug() << "=================================";
     qDebug() << "Available Examples:";
-    qDebug() << "1. String Operations - Basic Redis string operations";
-    qDebug() << "2. Hash Operations - Demonstrate Redis Hash functionality";
-    qDebug() << "3. List Operations - Demonstrate Redis List functionality";
-    qDebug() << "4. Set Operations - Demonstrate Redis Set functionality";
-    qDebug() << "5. Sorted Set Operations - Demonstrate Redis Sorted Set functionality";
-    qDebug() << "6. Expiration Operations - Demonstrate key expiration";
-    qDebug() << "7. User Profile Management (Real-World Example)";
-    qDebug() << "8. Game Leaderboard (Real-World Example)";
-    qDebug() << "9. Run All Demos";
-    qDebug() << "0. Exit";
+    qDebug() << "1. String Operations - 基本 Redis 字符串操作";
+    qDebug() << "2. Hash Operations - 演示 Redis Hash 功能";
+    qDebug() << "3. List Operations - 演示 Redis List 功能";
+    qDebug() << "4. Set Operations - 演示 Redis Set 功能";
+    qDebug() << "5. Sorted Set Operations - 演示 Redis Sorted Set 功能";
+    qDebug() << "6. Expiration Operations - 演示键过期";
+    qDebug() << "7. User Profile Management (用户管理示例)";
+    qDebug() << "8. Game Leaderboard (排行榜示例)";
+    qDebug() << "9. 运行所有演示";
+    qDebug() << "0. 退出";
     qDebug() << "\nSelect demo to run (0-9):";
 }
 
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
                 BasicStringDemo::run(redisManager);
                 redisManager.disconnect();
             } else {
-                qWarning() << "Failed to connect to Redis server";
+                qWarning() << "无法连接到 Redis 服务器";
             }
             QTimer::singleShot(100, &app, &QCoreApplication::quit);
             return app.exec();
@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
                 HashDemo::run(redisManager);
                 redisManager.disconnect();
             } else {
-                qWarning() << "Failed to connect to Redis server";
+                qWarning() << "无法连接到 Redis 服务器";
             }
             QTimer::singleShot(100, &app, &QCoreApplication::quit);
             return app.exec();
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
                 ListDemo::run(redisManager);
                 redisManager.disconnect();
             } else {
-                qWarning() << "Failed to connect to Redis server";
+                qWarning() << "无法连接到 Redis 服务器";
             }
             QTimer::singleShot(100, &app, &QCoreApplication::quit);
             return app.exec();
@@ -80,7 +80,7 @@ int main(int argc, char *argv[])
                 SetDemo::run(redisManager);
                 redisManager.disconnect();
             } else {
-                qWarning() << "Failed to connect to Redis server";
+                qWarning() << "无法连接到 Redis 服务器";
             }
             QTimer::singleShot(100, &app, &QCoreApplication::quit);
             return app.exec();
@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
                 SortedSetDemo::run(redisManager);
                 redisManager.disconnect();
             } else {
-                qWarning() << "Failed to connect to Redis server";
+                qWarning() << "无法连接到 Redis 服务器";
             }
             QTimer::singleShot(100, &app, &QCoreApplication::quit);
             return app.exec();
@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
                 ExpirationDemo::run(redisManager);
                 redisManager.disconnect();
             } else {
-                qWarning() << "Failed to connect to Redis server";
+                qWarning() << "无法连接到 Redis 服务器";
             }
             QTimer::singleShot(100, &app, &QCoreApplication::quit);
             return app.exec();
@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
                 UserProfileExample::run(redisManager);
                 redisManager.disconnect();
             } else {
-                qWarning() << "Failed to connect to Redis server";
+                qWarning() << "无法连接到 Redis 服务器";
             }
             QTimer::singleShot(100, &app, &QCoreApplication::quit);
             return app.exec();
@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
                 LeaderboardExample::run(redisManager);
                 redisManager.disconnect();
             } else {
-                qWarning() << "Failed to connect to Redis server";
+                qWarning() << "无法连接到 Redis 服务器";
             }
             QTimer::singleShot(100, &app, &QCoreApplication::quit);
             return app.exec();
@@ -154,32 +154,32 @@ int main(int argc, char *argv[])
                 LeaderboardExample::run(redisManager);
                 redisManager.disconnect();
             } else {
-                qWarning() << "Failed to connect to Redis server";
+                qWarning() << "无法连接到 Redis 服务器";
             }
             QTimer::singleShot(100, &app, &QCoreApplication::quit);
             return app.exec();
         }
 
         if (arg == "--help" || arg == "-h") {
-            qDebug() << "Usage: ./example [option]";
-            qDebug() << "Options:";
-            qDebug() << "  (no argument)  Run in interactive menu mode";
-            qDebug() << "  string, 1      Run String Operations demo";
-            qDebug() << "  hash, 2        Run Hash Operations demo";
-            qDebug() << "  list, 3         Run List Operations demo";
-            qDebug() << "  set, 4          Run Set Operations demo";
-            qDebug()  << "  sorted_set, 5  Run Sorted Set Operations demo";
-            qDebug() << "  expiration, 6   Run Expiration Operations demo";
-            qDebug() << "  user_profile, 7 Run User Profile Management demo";
-            qDebug() << "  leaderboard, 8  Run Game Leaderboard demo";
-            qDebug() << "  all, 9         Run all demos";
-            qDebug() << "  --help, -h     Show this help message";
+            qDebug() << "用法: ./example [选项]";
+            qDebug() << "选项:";
+            qDebug() << "  (无参数)  运行交互式菜单模式";
+            qDebug() << "  string, 1      运行 String Operations 演示";
+            qDebug() << "  hash, 2        运行 Hash Operations 演示";
+            qDebug() << "  list, 3         运行 List Operations 演示";
+            qDebug() << "  set, 4          运行 Set Operations 演示";
+            qDebug()  << "  sorted_set, 5  运行 Sorted Set Operations 演示";
+            qDebug() << "  expiration, 6   运行 Expiration Operations 演示";
+            qDebug() << "  user_profile, 7 运行 User Profile Management 演示";
+            qDebug() << "  leaderboard, 8  运行 Game Leaderboard 演示";
+            qDebug() << "  all, 9         运行所有演示";
+            qDebug() << "  --help, -h     显示此帮助信息";
             QTimer::singleShot(100, &app, &QCoreApplication::quit);
             return app.exec();
         }
 
-        qWarning() << "Unknown option:" << arg;
-        qWarning() << "Use --help for usage information";
+        qWarning() << "未知选项:" << arg;
+        qWarning() << "使用 --help 查看用法信息";
         QTimer::singleShot(100, &app, &QCoreApplication::quit);
         return app.exec();
     }
@@ -197,8 +197,8 @@ int main(int argc, char *argv[])
 
     // Connect to Redis server
     if (!redisManager.connectToServer("127.0.0.1", 6379)) {
-        qWarning() << "\nFailed to connect to Redis server.";
-        qWarning() << "Make sure Redis is running on 127.0.0.1:6379";
+        qWarning() << "\n无法连接到 Redis 服务器。";
+        qWarning() << "请确保 Redis 在 127.0.0.1:6379 上运行";
         QTimer::singleShot(100, &app, &QCoreApplication::quit);
         return app.exec();
     }
@@ -246,19 +246,19 @@ int main(int argc, char *argv[])
             LeaderboardExample::run(redisManager);
             break;
         case 0:
-            qDebug() << "\nExiting...";
+            qDebug() << "\n退出中...";
             redisManager.disconnect();
             QTimer::singleShot(100, &app, &QCoreApplication::quit);
             return app.exec();
         default:
-            qWarning() << "\nInvalid choice. Please run again with a valid option (0-9)";
+            qWarning() << "\n无效选择。请使用有效选项 (0-9) 重新运行";
             break;
     }
 
     // Disconnect
     redisManager.disconnect();
 
-    qDebug() << "\nDemo completed successfully!";
+    qDebug() << "\n演示成功完成!";
 
     // Exit the application
     QTimer::singleShot(100, &app, &QCoreApplication::quit);

@@ -103,7 +103,7 @@ QVector<QString> RedisListOperations::lRange(const QString &key, int start, int 
         for (const auto &value : values) {
             result.append(QString::fromStdString(value));
         }
-        qDebug() << "LRANGE" << key << start << stop << "found" << result.size() << "elements";
+        qDebug() << "LRANGE" << key << start << stop << "找到" << result.size() << "个元素";
     } catch (const std::exception &e) {
         qCritical() << "LRANGE error:" << e.what();
     }

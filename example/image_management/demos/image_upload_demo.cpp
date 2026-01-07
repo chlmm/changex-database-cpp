@@ -18,7 +18,7 @@ void ImageUploadDemo::run(ImageManager& imageManager)
 
     QString id1 = imageManager.uploadImageFromQImage("red_square.png", redSquare, "PNG", QStringList() << "simple" << "red");
     if (!id1.isEmpty()) {
-        qDebug() << "   Success! Image ID:" << id1;
+        qDebug() << "   成功! 图片 ID:" << id1;
         ImageModel metadata = imageManager.getImageMetadata(id1);
         qDebug() << "   Metadata:" << metadata.toString();
     } else {
@@ -39,7 +39,7 @@ void ImageUploadDemo::run(ImageManager& imageManager)
 
     QString id2 = imageManager.uploadImageFromQImage("gradient.png", gradientImage, "PNG", QStringList() << "gradient" << "color");
     if (!id2.isEmpty()) {
-        qDebug() << "   Success! Image ID:" << id2;
+        qDebug() << "   成功! 图片 ID:" << id2;
         ImageModel metadata = imageManager.getImageMetadata(id2);
         qDebug() << "   Metadata:" << metadata.toString();
     } else {
@@ -59,7 +59,7 @@ void ImageUploadDemo::run(ImageManager& imageManager)
 
     QString id3 = imageManager.uploadImageFromQImage("checkerboard.png", checkerboard, "PNG", QStringList() << "pattern" << "blackwhite");
     if (!id3.isEmpty()) {
-        qDebug() << "   Success! Image ID:" << id3;
+        qDebug() << "   成功! 图片 ID:" << id3;
         ImageModel metadata = imageManager.getImageMetadata(id3);
         qDebug() << "   Metadata:" << metadata.toString();
     } else {
@@ -79,7 +79,7 @@ void ImageUploadDemo::run(ImageManager& imageManager)
 
     QString id4 = imageManager.uploadImage("blue_rect.png", imageData, "image/png", QStringList() << "simple" << "blue");
     if (!id4.isEmpty()) {
-        qDebug() << "   Success! Image ID:" << id4;
+        qDebug() << "   成功! 图片 ID:" << id4;
         ImageModel metadata = imageManager.getImageMetadata(id4);
         qDebug() << "   Metadata:" << metadata.toString();
     } else {
@@ -89,7 +89,7 @@ void ImageUploadDemo::run(ImageManager& imageManager)
     // Summary
     qDebug() << "\n5. Summary:";
     int count = imageManager.getImageCount();
-    qDebug() << "   Total images uploaded:" << count;
+    qDebug() << "   总共上传的图片:" << count;
     qDebug() << "   Statistics:" << imageManager.getStatistics();
 
     qDebug() << "\n" << name() << " completed!";

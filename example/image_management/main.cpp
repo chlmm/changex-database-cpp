@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
                 ImageUploadDemo::run(imageManager);
                 redisManager.disconnect();
             } else {
-                qWarning() << "Failed to connect to Redis server";
+                qWarning() << "无法连接到 Redis 服务器";
             }
             QTimer::singleShot(100, &app, &QCoreApplication::quit);
             return app.exec();
@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
                 ImageRetrieveDemo::run(imageManager);
                 redisManager.disconnect();
             } else {
-                qWarning() << "Failed to connect to Redis server";
+                qWarning() << "无法连接到 Redis 服务器";
             }
             QTimer::singleShot(100, &app, &QCoreApplication::quit);
             return app.exec();
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
                 ImageModelDemo::run(imageManager);
                 redisManager.disconnect();
             } else {
-                qWarning() << "Failed to connect to Redis server";
+                qWarning() << "无法连接到 Redis 服务器";
             }
             QTimer::singleShot(100, &app, &QCoreApplication::quit);
             return app.exec();
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
                 ImageSearchDemo::run(imageManager);
                 redisManager.disconnect();
             } else {
-                qWarning() << "Failed to connect to Redis server";
+                qWarning() << "无法连接到 Redis 服务器";
             }
             QTimer::singleShot(100, &app, &QCoreApplication::quit);
             return app.exec();
@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
                 ImageManagementDemo::run(imageManager);
                 redisManager.disconnect();
             } else {
-                qWarning() << "Failed to connect to Redis server";
+                qWarning() << "无法连接到 Redis 服务器";
             }
             QTimer::singleShot(100, &app, &QCoreApplication::quit);
             return app.exec();
@@ -118,16 +118,16 @@ int main(int argc, char *argv[])
 
                 redisManager.disconnect();
             } else {
-                qWarning() << "Failed to connect to Redis server";
+                qWarning() << "无法连接到 Redis 服务器";
             }
             QTimer::singleShot(100, &app, &QCoreApplication::quit);
             return app.exec();
         }
 
         if (arg == "--help" || arg == "-h") {
-            qDebug() << "Usage: ./image_management_example [option]";
-            qDebug() << "Options:";
-            qDebug() << "  (no argument)  Run in interactive menu mode";
+            qDebug() << "用法: ./image_management_example [选项]";
+            qDebug() << "选项:";
+            qDebug() << "  (无参数)  运行交互式菜单模式";
             qDebug() << "  upload, 1      图片上传";
             qDebug() << "  retrieve, 2    图片检索";
             qDebug() << "  metadata, 3    图片元数据";
@@ -139,8 +139,8 @@ int main(int argc, char *argv[])
             return app.exec();
         }
 
-        qWarning() << "Unknown option:" << arg;
-        qWarning() << "Use --help for usage information";
+        qWarning() << "未知选项:" << arg;
+        qWarning() << "使用 --help 查看用法信息";
         QTimer::singleShot(100, &app, &QCoreApplication::quit);
         return app.exec();
     }
@@ -158,8 +158,8 @@ int main(int argc, char *argv[])
 
     // Connect to Redis server
     if (!redisManager.connectToServer("127.0.0.1", 6379)) {
-        qWarning() << "\nFailed to connect to Redis server.";
-        qWarning() << "Make sure Redis is running on 127.0.0.1:6379";
+        qWarning() << "\n无法连接到 Redis 服务器。";
+        qWarning() << "请确保 Redis 在 127.0.0.1:6379 上运行";
         QTimer::singleShot(100, &app, &QCoreApplication::quit);
         return app.exec();
     }
@@ -195,19 +195,19 @@ int main(int argc, char *argv[])
             ImageManagementDemo::run(imageManager);
             break;
         case 0:
-            qDebug() << "\nExiting...";
+            qDebug() << "\n退出中...";
             redisManager.disconnect();
             QTimer::singleShot(100, &app, &QCoreApplication::quit);
             return app.exec();
         default:
-            qWarning() << "\nInvalid choice. Please run again with a valid option (0-6)";
+            qWarning() << "\n无效选择。请使用有效选项 (0-6) 重新运行";
             break;
     }
 
     // Disconnect
     redisManager.disconnect();
 
-    qDebug() << "\nDemo completed successfully!";
+    qDebug() << "\n演示成功完成!";
 
     // Exit the application
     QTimer::singleShot(100, &app, &QCoreApplication::quit);

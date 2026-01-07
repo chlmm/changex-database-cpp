@@ -52,10 +52,10 @@ void SetDemo::run(RedisManager& redis)
     qDebug() << "  Set2 size: " << size;
 
     // Remove a member
-    qDebug() << "\n[SREM] Removing 'member2' from set1:";
+    qDebug() << "\n[SREM] 从 set1 中移除 'member2':";
     redis.sRem("demo:set1", "member2");
     size = redis.sCard("demo:set1");
-    qDebug() << "  Set1 size after removal: " << size;
+    qDebug() << "  移除后的 set1 大小: " << size;
 
     isMember = redis.sIsMember("demo:set1", "member2");
     qDebug() << "  Is 'member2' still in set1? " << (isMember ? "Yes" : "No");

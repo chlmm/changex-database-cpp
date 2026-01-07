@@ -18,14 +18,14 @@ void ImageRetrieveDemo::run(ImageManager& imageManager)
         return;
     }
 
-    qDebug() << "Found" << allIds.size() << "images in the database.";
+    qDebug() << "找到" << allIds.size() << "个图片在数据库中。";
 
     // Demo 1: Retrieve image data as QByteArray
     qDebug() << "\n1. Retrieving image data as QByteArray...";
     QString id1 = allIds.first();
     QByteArray imageData = imageManager.getImageData(id1);
     if (!imageData.isEmpty()) {
-        qDebug() << "   Success! Retrieved" << imageData.size() << "bytes";
+        qDebug() << "   成功! 获取了" << imageData.size() << "字节";
         ImageModel metadata = imageManager.getImageMetadata(id1);
         qDebug() << "   Image:" << metadata.toString();
     } else {
@@ -36,7 +36,7 @@ void ImageRetrieveDemo::run(ImageManager& imageManager)
     qDebug() << "\n2. Retrieving image as QImage object...";
     QImage image = imageManager.getImageAsQImage(id1);
     if (!image.isNull()) {
-        qDebug() << "   Success! Image dimensions:" << image.width() << "x" << image.height();
+        qDebug() << "   成功! 图片尺寸:" << image.width() << "x" << image.height();
         qDebug() << "   Format:" << image.format();
     } else {
         qWarning() << "   Failed to retrieve QImage";
@@ -54,7 +54,7 @@ void ImageRetrieveDemo::run(ImageManager& imageManager)
     qDebug() << "\n4. Saving image to local file...";
     QString savePath = "/tmp/test_image.png";
     if (imageManager.saveImageToFile(id1, savePath)) {
-        qDebug() << "   Success! Image saved to:" << savePath;
+        qDebug() << "   成功! 图片已保存到:" << savePath;
         qDebug() << "   File exists:" << QFile::exists(savePath);
     } else {
         qWarning() << "   Failed to save image to file";

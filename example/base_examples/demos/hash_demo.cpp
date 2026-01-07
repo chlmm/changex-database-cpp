@@ -46,13 +46,13 @@ void HashDemo::run(RedisManager& redis)
     qDebug() << "  Has 'phone' field: " << (hasPhone ? "Yes" : "No");
 
     // Update a field
-    qDebug() << "\n[HSET] Updating 'age' field from 28 to 29:";
+    qDebug() << "\n[HSET] 更新 'age' 字段从 28 到 29:";
     redis.hSet("demo:user:1001", "age", "29");
     QString age = redis.hGet("demo:user:1001", "age");
     qDebug() << "  New age: " << age;
 
     // Add new field
-    qDebug() << "\n[HSET] Adding new field 'phone':";
+    qDebug() << "\n[HSET] 添加新字段 'phone':";
     redis.hSet("demo:user:1001", "phone", "555-1234");
     QString phone = redis.hGet("demo:user:1001", "phone");
     qDebug() << "  Phone: " << phone;
@@ -63,10 +63,10 @@ void HashDemo::run(RedisManager& redis)
     qDebug() << "  Number of fields: " << len;
 
     // Delete a field
-    qDebug() << "\n[HDEL] Deleting 'phone' field:";
+    qDebug() << "\n[HDEL] 删除 'phone' 字段:";
     redis.hDel("demo:user:1001", "phone");
     len = redis.hLen("demo:user:1001");
-    qDebug() << "  Number of fields after deletion: " << len;
+    qDebug() << "  删除后的字段数: " << len;
 
     // Create another hash for comparison
     qDebug() << "\n[HSET] Creating another user 'demo:user:1002':";

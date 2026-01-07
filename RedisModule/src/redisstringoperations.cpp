@@ -20,7 +20,7 @@ bool RedisStringOperations::set(const QString &key, const QString &value)
 
     try {
         connection_->redis()->set(key.toStdString(), value.toStdString());
-        qDebug() << "SET" << key << "=" << value;
+        qDebug() << "SET [设置]" << key << "=" << value;
         return true;
     } catch (const std::exception &e) {
         qCritical() << "SET error:" << e.what();
@@ -39,10 +39,10 @@ QString RedisStringOperations::get(const QString &key)
         auto value = connection_->redis()->get(key.toStdString());
         if (value) {
             QString result = QString::fromStdString(*value);
-            qDebug() << "GET" << key << "=" << result;
+            qDebug() << "GET [获取]" << key << "=" << result;
             return result;
         }
-        qDebug() << "GET" << key << "= (null)";
+        qDebug() << "GET [获取]" << key << "= (null)";
         return QString();
     } catch (const std::exception &e) {
         qCritical() << "GET error:" << e.what();

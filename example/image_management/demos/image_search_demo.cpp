@@ -15,10 +15,10 @@ void ImageSearchDemo::run(ImageManager& imageManager)
         return;
     }
 
-    qDebug() << "Found" << allIds.size() << "images in the database.";
+    qDebug() << "找到" << allIds.size() << "个图片在数据库中。";
 
     // Demo 1: Get all image IDs
-    qDebug() << "\n1. Retrieving all image IDs...";
+    qDebug() << "\n1. 检索所有图片 ID...";
     allIds = imageManager.getAllImageIds();
     qDebug() << "   Total images:" << allIds.size();
     qDebug() << "   First 5 IDs:";
@@ -27,7 +27,7 @@ void ImageSearchDemo::run(ImageManager& imageManager)
     }
 
     // Demo 2: Search by single tag
-    qDebug() << "\n2. Searching images by single tag...";
+    qDebug() << "\n2. 按单个标签搜索图片...";
     QStringList testTags = QStringList() << "red" << "blue" << "green" << "small" << "simple";
     for (const QString& tag : testTags) {
         QStringList results = imageManager.searchByTag(tag);
@@ -94,7 +94,7 @@ void ImageSearchDemo::run(ImageManager& imageManager)
     qDebug() << QString("   Tag '%1': %2 image(s) found").arg(nonExistentTag).arg(noResults.size());
 
     // Demo 7: Display detailed information for search results
-    qDebug() << "\n7. Displaying detailed information for search results...";
+    qDebug() << "\n7. 显示搜索结果的详细信息...";
     QString searchTag = "small";
     QStringList searchResults = imageManager.searchByTag(searchTag);
     if (!searchResults.isEmpty()) {

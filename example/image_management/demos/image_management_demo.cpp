@@ -85,7 +85,7 @@ void ImageManagementDemo::run(ImageManager& imageManager)
     // Step 4: Display all uploaded images
     qDebug() << "\nStep 4: Displaying all uploaded images...";
     QStringList allIds = imageManager.getAllImageIds();
-    qDebug() << "   Found" << allIds.size() << "images:";
+    qDebug() << "找到" << allIds.size() << "个图片:";
     for (int i = 0; i < allIds.size(); ++i) {
         QString id = allIds[i];
         ImageModel metadata = imageManager.getImageMetadata(id);
@@ -99,7 +99,7 @@ void ImageManagementDemo::run(ImageManager& imageManager)
     }
 
     // Step 5: Search images by tag
-    qDebug() << "\nStep 5: Searching images by tag...";
+    qDebug() << "\nStep 5: 按标签搜索图片...";
     QStringList searchTags = QStringList() << "landscape" << "portrait" << "abstract";
     for (const QString& tag : searchTags) {
         QStringList results = imageManager.searchByTag(tag);
@@ -111,7 +111,7 @@ void ImageManagementDemo::run(ImageManager& imageManager)
     }
 
     // Step 6: Update image metadata
-    qDebug() << "\nStep 6: Updating image metadata...";
+    qDebug() << "\nStep 6: 更新图片元数据...";
     if (!uploadedIds.isEmpty()) {
         QString targetId = uploadedIds.first();
         ImageModel metadata = imageManager.getImageMetadata(targetId);
@@ -129,7 +129,7 @@ void ImageManagementDemo::run(ImageManager& imageManager)
     }
 
     // Step 7: Retrieve and save an image
-    qDebug() << "\nStep 7: Retrieving and saving an image to file...";
+    qDebug() << "\nStep 7: 检索并保存图片到文件...";
     if (!uploadedIds.isEmpty()) {
         QString id = uploadedIds.first();
         QString savePath = "/tmp/retrieved_image.jpg";
@@ -165,14 +165,14 @@ void ImageManagementDemo::run(ImageManager& imageManager)
     qDebug() << QString("   Total storage size: %1 bytes").arg(imageManager.getTotalSize());
 
     // Step 10: Delete specific images
-    qDebug() << "\nStep 10: Deleting specific images...";
+    qDebug() << "\nStep 10: 删除特定图片...";
     if (uploadedIds.size() >= 2) {
         QString idToDelete = uploadedIds.takeLast();
         ImageModel metadata = imageManager.getImageMetadata(idToDelete);
 
         qDebug() << "   Deleting image:" << metadata.getFilename();
         if (imageManager.deleteImage(idToDelete)) {
-            qDebug() << "   Image deleted successfully.";
+            qDebug() << "   图片删除成功。";
         }
 
         qDebug() << QString("   Remaining images: %1").arg(imageManager.getImageCount());

@@ -64,7 +64,7 @@ QMap<QString, QString> RedisHashOperations::hGetAll(const QString &key)
         for (const auto &pair : hash) {
             result.insert(QString::fromStdString(pair.first), QString::fromStdString(pair.second));
         }
-        qDebug() << "HGETALL" << key << "found" << result.size() << "fields";
+        qDebug() << "HGETALL" << key << "找到" << result.size() << "个字段";
     } catch (const std::exception &e) {
         qCritical() << "HGETALL error:" << e.what();
     }
@@ -120,7 +120,7 @@ QVector<QString> RedisHashOperations::hKeys(const QString &key)
         for (const auto &k : keys) {
             result.append(QString::fromStdString(k));
         }
-        qDebug() << "HKEYS" << key << "found" << result.size() << "keys";
+        qDebug() << "HKEYS" << key << "找到" << result.size() << "个键";
     } catch (const std::exception &e) {
         qCritical() << "HKEYS error:" << e.what();
     }

@@ -76,7 +76,7 @@ QVector<QString> RedisSetOperations::sMembers(const QString &key)
         for (const auto &member : members) {
             result.append(QString::fromStdString(member));
         }
-        qDebug() << "SMEMBERS" << key << "found" << result.size() << "members";
+        qDebug() << "SMEMBERS" << key << "找到" << result.size() << "个成员";
     } catch (const std::exception &e) {
         qCritical() << "SMEMBERS error:" << e.what();
     }
@@ -119,7 +119,7 @@ QVector<QString> RedisSetOperations::sUnion(const QVector<QString> &keys)
         for (const auto &member : members) {
             result.append(QString::fromStdString(member));
         }
-        qDebug() << "SUNION" << "found" << result.size() << "members";
+        qDebug() << "SUNION" << "找到" << result.size() << "个成员";
     } catch (const std::exception &e) {
         qCritical() << "SUNION error:" << e.what();
     }
@@ -145,7 +145,7 @@ QVector<QString> RedisSetOperations::sInter(const QVector<QString> &keys)
         for (const auto &member : members) {
             result.append(QString::fromStdString(member));
         }
-        qDebug() << "SINTER" << "found" << result.size() << "members";
+        qDebug() << "SINTER" << "找到" << result.size() << "个成员";
     } catch (const std::exception &e) {
         qCritical() << "SINTER error:" << e.what();
     }
@@ -171,7 +171,7 @@ QVector<QString> RedisSetOperations::sDiff(const QVector<QString> &keys)
         for (const auto &member : members) {
             result.append(QString::fromStdString(member));
         }
-        qDebug() << "SDIFF" << "found" << result.size() << "members";
+        qDebug() << "SDIFF" << "找到" << result.size() << "个成员";
     } catch (const std::exception &e) {
         qCritical() << "SDIFF error:" << e.what();
     }

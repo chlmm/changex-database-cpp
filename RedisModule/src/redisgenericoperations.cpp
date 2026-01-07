@@ -59,7 +59,7 @@ QVector<QString> RedisGenericOperations::keys(const QString &pattern)
         for (const auto &key : keys) {
             result.append(QString::fromStdString(key));
         }
-        qDebug() << "KEYS" << pattern << "found" << result.size() << "keys";
+        qDebug() << "KEYS" << pattern << "找到" << result.size() << "个键";
     } catch (const std::exception &e) {
         qCritical() << "KEYS error:" << e.what();
     }

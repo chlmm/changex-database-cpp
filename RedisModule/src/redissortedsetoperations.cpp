@@ -42,7 +42,7 @@ QVector<QString> RedisSortedSetOperations::zRange(const QString &key, int start,
         for (const auto &element : elements) {
             result.append(QString::fromStdString(element.first));
         }
-        qDebug() << "ZRANGE" << key << start << stop << "found" << result.size() << "elements";
+        qDebug() << "ZRANGE" << key << start << stop << "找到" << result.size() << "个元素";
     } catch (const std::exception &e) {
         qCritical() << "ZRANGE error:" << e.what();
     }

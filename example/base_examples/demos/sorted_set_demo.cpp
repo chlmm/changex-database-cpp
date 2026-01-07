@@ -63,7 +63,7 @@ void SortedSetDemo::run(RedisManager& redis)
     }
 
     // Update a player's score
-    qDebug() << "\n[ZADD] Updating player3's score from 150.0 to 175.0:";
+    qDebug() << "\n[ZADD] 更新 player3 的分数从 150.0 到 175.0:";
     redis.zAdd("demo:leaderboard", 175.0, "player3");
     score = redis.zScore("demo:leaderboard", "player3");
     qDebug() << "  New score: " << score;

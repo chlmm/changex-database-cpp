@@ -18,7 +18,7 @@ bool RedisConnection::connectToServer(const QString &host, int port)
         QString connectionOptions = "tcp://" + host + ":" + QString::number(port);
         redis_ = std::make_unique<sw::redis::Redis>(connectionOptions.toStdString());
         connected_ = true;
-        qDebug() << "Connected to Redis server:" << host << ":" << port;
+        qDebug() << "已连接到 Redis 服务器:" << host << ":" << port;
         return true;
     } catch (const std::exception &e) {
         qCritical() << "Failed to connect to Redis:" << e.what();

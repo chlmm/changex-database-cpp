@@ -25,7 +25,7 @@ void ImageModelDemo::run(ImageManager& imageManager)
     qDebug() << "   Tags:" << metadata.getTags().join(", ");
 
     // Demo 2: Add tags to an image
-    qDebug() << "\n2. Adding tags to image...";
+    qDebug() << "\n2. 添加标签到图片...";
     QStringList newTags = QStringList() << "test" << "demo" << "featured";
     for (const QString& tag : newTags) {
         if (imageManager.addTagToImage(targetId, tag)) {
@@ -40,7 +40,7 @@ void ImageModelDemo::run(ImageManager& imageManager)
     qDebug() << "   Updated tags:" << metadata.getTags().join(", ");
 
     // Demo 3: Remove tags from an image
-    qDebug() << "\n3. Removing tags from image...";
+    qDebug() << "\n3. 从图片中移除标签...";
     QStringList tagsToRemove = QStringList() << "test" << "demo";
     for (const QString& tag : tagsToRemove) {
         if (imageManager.removeTagFromImage(targetId, tag)) {
@@ -55,10 +55,10 @@ void ImageModelDemo::run(ImageManager& imageManager)
     qDebug() << "   Updated tags:" << metadata.getTags().join(", ");
 
     // Demo 4: Update all tags at once
-    qDebug() << "\n4. Updating all tags at once...";
+    qDebug() << "\n4. 一次性更新所有标签...";
     QStringList updatedTags = QStringList() << "landscape" << "nature" << "scenery";
     if (imageManager.updateTags(targetId, updatedTags)) {
-        qDebug() << "   Success! New tags:" << updatedTags.join(", ");
+        qDebug() << "   成功! 新标签:" << updatedTags.join(", ");
     } else {
         qWarning() << "   Failed to update tags";
     }
@@ -68,13 +68,13 @@ void ImageModelDemo::run(ImageManager& imageManager)
     qDebug() << "   Current tags:" << metadata.getTags().join(", ");
 
     // Demo 5: Update complete metadata
-    qDebug() << "\n5. Updating complete metadata...";
+    qDebug() << "\n5. 更新完整的元数据...";
     metadata.setFilename("updated_" + metadata.getFilename());
     metadata.setWidth(metadata.getWidth() + 10);
     metadata.setHeight(metadata.getHeight() + 10);
 
     if (imageManager.updateMetadata(targetId, metadata)) {
-        qDebug() << "   Success!";
+        qDebug() << "   成功!";
         qDebug() << "   New metadata:" << metadata.toString();
     } else {
         qWarning() << "   Failed to update metadata";
@@ -107,7 +107,7 @@ void ImageModelDemo::run(ImageManager& imageManager)
     if (!id3.isEmpty()) qDebug() << "      - Image 3 ID:" << id3;
 
     // Demo 8: Display metadata for multiple images
-    qDebug() << "\n8. Displaying metadata for all images...";
+    qDebug() << "\n8. 显示所有图片的元数据...";
     allIds = imageManager.getAllImageIds();
     for (int i = 0; i < allIds.size() && i < 5; ++i) {
         QString id = allIds[i];

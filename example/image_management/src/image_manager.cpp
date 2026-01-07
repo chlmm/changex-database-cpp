@@ -64,7 +64,7 @@ QString ImageManager::uploadImage(const QString& filename,
     // Update statistics
     updateStatistics(1, imageData.size());
 
-    qDebug() << "Image uploaded successfully:" << model.toString();
+    qDebug() << "图片上传成功:" << model.toString();
     return id;
 }
 
@@ -189,7 +189,7 @@ bool ImageManager::saveImageToFile(const QString& id, const QString& filepath)
     file.write(data);
     file.close();
 
-    qDebug() << "Image saved to file:" << filepath;
+    qDebug() << "图片已保存到文件:" << filepath;
     return true;
 }
 
@@ -229,7 +229,7 @@ bool ImageManager::addTagToImage(const QString& id, const QString& tag)
     }
 
     if (metadata.hasTag(tag)) {
-        qDebug() << "Tag already exists:" << tag;
+        qDebug() << "标签已存在:" << tag;
         return true;
     }
 
@@ -250,7 +250,7 @@ bool ImageManager::removeTagFromImage(const QString& id, const QString& tag)
     }
 
     if (!metadata.hasTag(tag)) {
-        qDebug() << "Tag does not exist:" << tag;
+        qDebug() << "标签不存在:" << tag;
         return true;
     }
 
@@ -351,7 +351,7 @@ bool ImageManager::deleteImage(const QString& id)
     // Update statistics
     updateStatistics(-1, -metadata.getSize());
 
-    qDebug() << "Image deleted successfully:" << id;
+    qDebug() << "图片删除成功:" << id;
     return true;
 }
 
@@ -373,7 +373,7 @@ bool ImageManager::clearAllImages()
     QStringList allIds = getAllImageIds();
     int deleted = deleteImages(allIds);
 
-    qDebug() << "Cleared" << deleted << "images";
+    qDebug() << "已清除" << deleted << "张图片";
     return deleted == allIds.size();
 }
 

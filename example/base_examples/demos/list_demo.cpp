@@ -29,7 +29,7 @@ void ListDemo::run(RedisManager& redis)
     // Get all elements
     qDebug() << "\n[LRANGE] Getting all elements (0 to -1):";
     QVector<QString> allItems = redis.lRange("demo:mylist", 0, -1);
-    qDebug() << "  All elements:";
+    qDebug() << "  所有元素:";
     for (int i = 0; i < allItems.size(); ++i) {
         qDebug() << "    [" << i << "] " << allItems[i];
     }
@@ -37,7 +37,7 @@ void ListDemo::run(RedisManager& redis)
     // Get range of elements
     qDebug() << "\n[LRANGE] Getting elements 1 to 3:";
     QVector<QString> rangeItems = redis.lRange("demo:mylist", 1, 3);
-    qDebug() << "  Elements[1-3]:";
+    qDebug() << "  元素[1-3]:";
     for (int i = 0; i < rangeItems.size(); ++i) {
         qDebug() << "    [" << (i+1) << "] " << rangeItems[i];
     }
@@ -71,11 +71,11 @@ void ListDemo::run(RedisManager& redis)
     qDebug() << "  Result: " << (outOfRange.isEmpty() ? "(empty/out of range)" : outOfRange);
 
     // Add more items to demonstrate queue behavior
-    qDebug() << "\n[RPUSH] Adding more items to simulate a queue:";
+    qDebug() << "\n[RPUSH] 添加更多项目以模拟队列:";
     redis.rPush("demo:mylist", "task1");
     redis.rPush("demo:mylist", "task2");
     redis.rPush("demo:mylist", "task3");
-    qDebug() << "  Added: task1, task2, task3";
+    qDebug() << "  添加了: task1, task2, task3";
 
     len = redis.lLen("demo:mylist");
     qDebug() << "\n[LLEN] Current list length: " << len;
