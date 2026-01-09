@@ -9,6 +9,7 @@ include_directories(
 # Source files
 set(SOURCES
     main.cpp
+    workflow.cpp
     src/image_manager.cpp
     src/image_model.cpp
     demos/image_upload_demo.cpp
@@ -20,6 +21,7 @@ set(SOURCES
 
 # Header files
 set(HEADERS
+    workflow.h
     src/image_manager.h
     src/image_model.h
     demos/image_upload_demo.h

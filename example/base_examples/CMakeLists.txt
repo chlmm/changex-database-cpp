@@ -9,6 +9,7 @@ include_directories(
 # Source files
 set(EXAMPLE_SOURCES
     main.cpp
+    workflow.cpp
     demos/basic_string_demo.cpp
     demos/hash_demo.cpp
     demos/list_demo.cpp
@@ -21,6 +22,7 @@ set(EXAMPLE_SOURCES
 
 # Header files
 set(EXAMPLE_HEADERS
+    workflow.h
     demos/basic_string_demo.h
     demos/hash_demo.h
     demos/list_demo.h
