@@ -10,44 +10,22 @@ class RedisExpirationOperations
 {
 public:
     /**
-     * @brief 构造函数,初始化RedisExpirationOperations对象
-     * @param connection Redis连接对象指针
-     */
+    * @brief 构造函数和析构函数
+    *
+    * 构造函数初始化RedisExpirationOperations对象,析构函数清理资源
+    */
     explicit RedisExpirationOperations(RedisConnection* connection);
-
-    /**
-     * @brief 析构函数,清理资源
-     */
     ~RedisExpirationOperations();
 
     /**
-     * @brief 设置键的过期时间(秒)
-     * @param key 键名
-     * @param seconds 过期秒数
-     * @return 设置是否成功
-     */
+    * @brief 过期操作
+    *
+    * 设置键的过期时间(秒),设置键的过期时间(时间戳)
+    * 获取键的剩余生存时间,移除键的过期时间使其永久存在
+    */
     bool expire(const QString &key, int seconds);
-
-    /**
-     * @brief 设置键的过期时间(时间戳)
-     * @param key 键名
-     * @param timestamp Unix时间戳
-     * @return 设置是否成功
-     */
     bool expireAt(const QString &key, qint64 timestamp);
-
-    /**
-     * @brief 获取键的剩余生存时间
-     * @param key 键名
-     * @return 剩余秒数
-     */
     int ttl(const QString &key);
-
-    /**
-     * @brief 移除键的过期时间,使其永久存在
-     * @param key 键名
-     * @return 操作是否成功
-     */
     bool persist(const QString &key);
 
 private:
