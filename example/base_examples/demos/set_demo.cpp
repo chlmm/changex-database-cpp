@@ -1,5 +1,5 @@
 #include "set_demo.h"
-#include "redismanager.h"
+#include <RedisModule/redismanager.h>
 #include <QDebug>
 
 void SetDemo::run(RedisManager& redis)

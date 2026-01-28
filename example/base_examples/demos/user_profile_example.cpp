@@ -1,5 +1,5 @@
 #include "user_profile_example.h"
-#include "redismanager.h"
+#include <RedisModule/redismanager.h>
 #include <QDebug>
 
 void UserProfileExample::createUserProfile(RedisManager& redis, const QString& userId,

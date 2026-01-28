@@ -1,5 +1,5 @@
 #include "basic_string_demo.h"
-#include "redismanager.h"
+#include <RedisModule/redismanager.h>
 #include <QDebug>
 
 void BasicStringDemo::run(RedisManager& redis)

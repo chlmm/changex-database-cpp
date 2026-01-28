@@ -23,6 +23,13 @@ if(BUILD_BASE_EXAMPLES)
     add_subdirectory(example/base_examples)
 endif()
 
-if(BUILD_IMAGE_MANAGEMENT)
-    add_subdirectory(example/image_management)
+if(BUILD_REDIS_EXAMPLES)
+    add_subdirectory(example/redis_examples)
+endif()
+
+# ============ 测试配置 ============
+option(BUILD_TESTS "Build tests" ON)
+if(BUILD_TESTS)
+    find_package(Qt5 REQUIRED COMPONENTS Test)
+    add_subdirectory(tests)
 endif()

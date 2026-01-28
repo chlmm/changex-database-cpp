@@ -1,5 +1,5 @@
 #include "hash_demo.h"
-#include "redismanager.h"
+#include <RedisModule/redismanager.h>
 #include <QDebug>
 
 void HashDemo::run(RedisManager& redis)

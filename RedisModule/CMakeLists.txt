@@ -6,37 +6,40 @@ add_definitions(-DREDISMODULE_LIBRARY)
 
 # Include directories
 include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/include
-    # ${CMAKE_CURRENT_SOURCE_DIR}/include/RedisModule
+    ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 # Source files
 set(MODULE_SOURCES
-    src/redismanager.cpp
-    src/redisconnection.cpp
-    src/redisstringoperations.cpp
-    src/redishashoperations.cpp
-    src/redislistoperations.cpp
-    src/redissetoperations.cpp
-    src/redissortedsetoperations.cpp
-    src/redisexpirationoperations.cpp
-    src/redistransactionoperations.cpp
-    src/redisgenericoperations.cpp
+    redismanager.cpp
+    tool/redisconnection.cpp
+    tool/redisoperationsbase.cpp
+    operation/redisstringoperations.cpp
+    operation/redisbytesoperations.cpp
+    operation/redishashoperations.cpp
+    operation/redislistoperations.cpp
+    operation/redissetoperations.cpp
+    operation/redissortedsetoperations.cpp
+    operation/redisexpirationoperations.cpp
+    operation/redistransactionoperations.cpp
+    operation/redisgenericoperations.cpp
 )
 
 # Header files
 set(MODULE_HEADERS
-    include/redismanager.h
-    include/redisconnection.h
-    include/redisstringoperations.h
-    include/redishashoperations.h
-    include/redislistoperations.h
-    include/redissetoperations.h
-    include/redissortedsetoperations.h
-    include/redisexpirationoperations.h
-    include/redistransactionoperations.h
-    include/redisgenericoperations.h
-    include/redismodule_export.h
+    redismanager.h
+    tool/redisconnection.h
+    tool/redisoperationsbase.h
+    operation/redisstringoperations.h
+    operation/redisbytesoperations.h
+    operation/redishashoperations.h
+    operation/redislistoperations.h
+    operation/redissetoperations.h
+    operation/redissortedsetoperations.h
+    operation/redisexpirationoperations.h
+    operation/redistransactionoperations.h
+    operation/redisgenericoperations.h
+    tool/redismodule_export.h
 )
 
 # Create shared library
@@ -71,6 +74,24 @@ install(TARGETS ${PROJECT_NAME}
     ARCHIVE DESTINATION lib
 )
 
-install(FILES ${MODULE_HEADERS}
+install(FILES redismanager.h
     DESTINATION include/RedisModule
+)
+install(FILES 
+    tool/redismodule_export.h
+    tool/redisconnection.h
+    tool/redisoperationsbase.h
+    DESTINATION include/RedisModule/tool
+)
+install(FILES 
+    operation/redisstringoperations.h
+    operation/redisbytesoperations.h
+    operation/redishashoperations.h
+    operation/redislistoperations.h
+    operation/redissetoperations.h
+    operation/redissortedsetoperations.h
+    operation/redisexpirationoperations.h
+    operation/redistransactionoperations.h
+    operation/redisgenericoperations.h
+    DESTINATION include/RedisModule/operation
 )

@@ -1,5 +1,5 @@
 #include "leaderboard_example.h"
-#include "redismanager.h"
+#include <RedisModule/redismanager.h>
 #include <QDebug>
 
 void LeaderboardExample::addPlayerScore(RedisManager& redis, const QString& leaderboardKey,

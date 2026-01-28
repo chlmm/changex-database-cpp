@@ -1,5 +1,5 @@
-# Example - Demo Application
-project(example VERSION 1.0.0)
+# Redis Examples - 分层架构图片管理示例
+project(redis_examples VERSION 1.0.0)
 
 # Include directories
 include_directories(
@@ -7,38 +7,27 @@ include_directories(
 )
 
 # Source files
-set(EXAMPLE_SOURCES
+set(SOURCES
     main.cpp
-    workflow.cpp
-    demos/basic_string_demo.cpp
-    demos/hash_demo.cpp
-    demos/list_demo.cpp
-    demos/set_demo.cpp
-    demos/sorted_set_demo.cpp
-    demos/expiration_demo.cpp
-    demos/user_profile_example.cpp
-    demos/leaderboard_example.cpp
+    models/image_model.cpp
+    repositories/image_repository.cpp
+    scenarios/image_scenarios.cpp
 )
 
-# Header files
-set(EXAMPLE_HEADERS
-    workflow.h
-    demos/basic_string_demo.h
-    demos/hash_demo.h
-    demos/list_demo.h
-    demos/set_demo.h
-    demos/sorted_set_demo.h
-    demos/expiration_demo.h
-    demos/user_profile_example.h
-    demos/leaderboard_example.h
+# Header files (for IDE support)
+set(HEADERS
+    models/image_model.h
+    repositories/image_repository.h
+    scenarios/image_scenarios.h
 )
 
 # Create executable
-add_executable(${PROJECT_NAME} ${EXAMPLE_SOURCES} ${EXAMPLE_HEADERS})
+add_executable(${PROJECT_NAME} ${SOURCES} ${HEADERS})
 
 # Link libraries
 target_link_libraries(${PROJECT_NAME}
     Qt5::Core
+    Qt5::Gui
     Qt5::Network
     RedisModule
 )
@@ -55,21 +44,21 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
     BUILD_RPATH "$ORIGIN"
 )
 
-# Copy 3rdParty libraries to build directory for portability
-set(THIRD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../3rdParty)
+# ============ 复制第三方库到构建目录 ============
+set(THIRD_PARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/../../3rdParty)
 set(OUTPUT_DIR ${CMAKE_CURRENT_BINARY_DIR})
 
-# Check if hiredis libraries exist, if not copy them
+# Copy hiredis libraries if missing
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E make_directory ${OUTPUT_DIR}
     COMMAND ${CMAKE_COMMAND} -DOUTPUT_DIR=${OUTPUT_DIR} -DSRC_DIR=${THIRD_PARTY_DIR}/hiredis/lib -P ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/CopyIfMissing.cmake
     COMMENT "Checking and copying hiredis libraries to ${OUTPUT_DIR}"
 )
 
-# Check if redis-plus-plus libraries exist, if not copy them
+# Copy redis-plus-plus libraries if missing
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
     COMMAND ${CMAKE_COMMAND} -DOUTPUT_DIR=${OUTPUT_DIR} -DSRC_DIR=${THIRD_PARTY_DIR}/redis-plus-plus/lib -P ${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/CopyIfMissing.cmake
     COMMENT "Checking and copying redis-plus-plus libraries to ${OUTPUT_DIR}"
 )
 
-message(STATUS "Will copy 3rdParty libraries to build directory: ${OUTPUT_DIR} (if missing)")
+message(STATUS "Redis Examples: Will copy 3rdParty libraries to build directory if missing")

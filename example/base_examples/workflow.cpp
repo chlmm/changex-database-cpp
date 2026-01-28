@@ -1,7 +1,7 @@
 #include "workflow.h"
 #include <QTextStream>
 #include <QDebug>
-#include "redismanager.h"
+#include <RedisModule/redismanager.h>
 #include "demos/basic_string_demo.h"
 #include "demos/hash_demo.h"
 #include "demos/list_demo.h"

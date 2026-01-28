@@ -1,5 +1,5 @@
 #include "list_demo.h"
-#include "redismanager.h"
+#include <RedisModule/redismanager.h>
 #include <QDebug>
 
 void ListDemo::run(RedisManager& redis)

@@ -1,5 +1,5 @@
 #include "sorted_set_demo.h"
-#include "redismanager.h"
+#include <RedisModule/redismanager.h>
 #include <QDebug>
 
 void SortedSetDemo::run(RedisManager& redis)
