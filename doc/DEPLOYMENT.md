@@ -13,14 +13,38 @@ project/
 │   └── redis-plus-plus/
 │       ├── include/
 │       └── lib/
-├── build/
-│   └── example/
-│       ├── example              # 可执行文件
-│       ├── libhiredis.so*       # 依赖库
-│       └── libredis++.so*       # 依赖库
-├── scripts/
+├── 3rdSourceCode/               # 第三方源码
+│   ├── hiredis/
+│   └── redis-plus-plus/
+├── build/                       # 构建输出
+│   ├── example/                 # 示例可执行文件
+│   ├── RedisModule/             # Redis模块库
+│   ├── tests/                   # 测试可执行文件
+│   └── reports/                 # 测试报告
+├── cmake/                       # CMake配置文件
+│   ├── 3rdparty.cmake
+│   ├── build_options.cmake
+│   └── CopyIfMissing.cmake
+├── doc/                         # 项目文档
+│   ├── DEPLOYMENT.md
+│   ├── PROJECT_ARCHITECTURE.md
+│   ├── PROJECT_OVERVIEW.md
+│   └── sss.drawio.svg
+├── example/                     # 示例代码
+│   ├── base_examples/
+│   └── redis_examples/
+├── RedisModule/                 # Redis模块核心代码
+│   ├── operation/
+│   └── tool/
+├── scripts/                     # 脚本
 │   └── setup_3rdparty.sh       # 初始化脚本
-└── .gitignore                   # 忽略 3rdParty 和 build
+├── tests/                       # 测试代码
+│   ├── benchmarks/
+│   ├── fixtures/
+│   ├── persistence/
+│   └── scripts/
+├── CMakeLists.txt              # 主CMake配置
+└── .gitignore                  # 忽略 3rdParty 和 build
 ```
 
 ## 初始化（首次使用）
@@ -44,7 +68,11 @@ tar -czf project.tar.gz --exclude='build/*' .
 
 # 或者只打包可执行文件和依赖库
 cd build/example
-tar -czf example-package.tar.gz example libhiredis.so* libredis++.so*
+tar -czf example-package.tar.gz \
+    base_examples/example \
+    redis_examples/redis_examples \
+    redis_examples/libhiredis.so* \
+    redis_examples/libredis++.so*
 ```
 
 ## 在目标机器上部署
@@ -60,9 +88,13 @@ mkdir -p build && cd build
 cmake ..
 make
 
-# 运行
-cd example
+# 运行基础示例
+cd example/base_examples
 ./example
+
+# 或运行 Redis 示例
+cd ../redis_examples
+./redis_examples
 ```
 
 ### 方案 2：仅部署可执行文件（推荐）
@@ -72,8 +104,11 @@ mkdir -p deploy
 cd deploy
 tar -xzf example-package.tar.gz
 
-# 直接运行
-./example
+# 运行基础示例
+./base_examples/example
+
+# 或运行 Redis 示例
+./redis_examples/redis_examples
 ```
 
 ## 注意事项
