@@ -48,3 +48,8 @@ set_target_properties(tst_bytesbenchmark PROPERTIES
 enable_testing()
 add_test(NAME StringBenchmark COMMAND tst_stringbenchmark)
 add_test(NAME BytesBenchmark COMMAND tst_bytesbenchmark)
+
+# Persistence tests
+add_subdirectory(persistence)
+add_test(NAME RdbPersistence COMMAND tst_rdbpersistence)
+add_test(NAME AofPersistence COMMAND tst_aofpersistence)
