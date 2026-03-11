@@ -7,7 +7,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-# Find Qt 5.12.12
+# Find Qt5 (>= 5.12, recommended 5.15.x)
 find_package(Qt5 REQUIRED COMPONENTS Core Network Gui)
 
 # ============ 3rdParty 配置 ============
