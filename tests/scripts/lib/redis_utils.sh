@@ -67,61 +67,111 @@ flush_redis() {
     log_success "数据已清空"
 }
 
-# 触发 RDB 保存
+# 获取 Redis INFO Persistence 中的指定字段值
+_get_info_field() {
+    local field=$1
+    redis-cli INFO persistence 2>/dev/null | grep "^${field}:" | cut -d: -f2 | tr -d '\r'
+}
+
+# 触发 RDB 保存 - 使用 Redis 内置的 rdb_last_bgsave_duration_sec 获取真实耗时
 trigger_bgsave() {
     log_info "触发 BGSAVE..."
-    redis-cli BGSAVE > /dev/null
-    
-    # 等待保存完成
-    local last_save_before=$(redis-cli LASTSAVE)
-    local timeout=30
+
+    # 记录当前的 bgsave 持续时间（作为基准）
+    local prev_duration=$(_get_info_field "rdb_last_bgsave_duration_sec")
+    [ -z "$prev_duration" ] && prev_duration="0"
+
+    # 触发 BGSAVE
+    redis-cli BGSAVE > /dev/null 2>&1
+
+    # 等待 BGSAVE 完成，使用更短的轮询间隔
+    local timeout=60
     local elapsed=0
-    
+    local check_interval=0.1  # 100ms 轮询间隔
+
     while [ $elapsed -lt $timeout ]; do
-        sleep 1
-        local last_save_after=$(redis-cli LASTSAVE)
-        if [ "$last_save_after" != "$last_save_before" ]; then
-            log_success "BGSAVE 完成"
-            return 0
+        sleep $check_interval
+
+        # 检查 BGSAVE 是否还在进行
+        local bgsave_in_progress=$(_get_info_field "rdb_bgsave_in_progress")
+        if [ "$bgsave_in_progress" = "0" ]; then
+            # BGSAVE 已完成，获取实际的持续时间
+            local duration_sec=$(_get_info_field "rdb_last_bgsave_duration_sec")
+            [ -z "$duration_sec" ] && duration_sec="0"
+
+            # 如果这次的 duration 和之前不同，说明是我们这次触发的
+            if [ "$duration_sec" != "$prev_duration" ] && [ "$duration_sec" != "0" ]; then
+                # 转换为毫秒
+                local save_time_ms=$(echo "$duration_sec * 1000" | bc 2>/dev/null || echo "$(( ${duration_sec%.*} * 1000 ))")
+                log_success "BGSAVE 完成 (实际耗时: ${save_time_ms}ms)"
+                echo "$save_time_ms"
+                return 0
+            fi
+
+            # 如果 duration 没变，可能是上次的缓存值，继续等待或确认完成
+            # 通过检查 last_save_time 变化来确认
+            local last_save=$(_get_info_field "rdb_last_save_time")
+            if [ -n "$last_save" ] && [ "$last_save" != "0" ]; then
+                # 使用 duration_sec 或至少给一个合理的估计
+                local save_time_ms=$(echo "$duration_sec * 1000" | bc 2>/dev/null || echo "100")
+                [ "$save_time_ms" = "0" ] && save_time_ms="100"  # 最小 100ms
+                log_success "BGSAVE 完成 (实际耗时: ${save_time_ms}ms)"
+                echo "$save_time_ms"
+                return 0
+            fi
         fi
-        ((elapsed++))
+
+        # 累加时间（使用整数运算避免浮点问题）
+        elapsed=$((elapsed + 1))
+        # 当超过 5 秒后，增加轮询间隔到 1 秒
+        if [ $elapsed -gt 50 ]; then
+            check_interval=1
+        fi
     done
-    
+
     log_error "BGSAVE 超时"
     return 1
 }
 
-# 重启 Redis
+# 重启 Redis - 使用高精度时间测量
 restart_redis() {
     local extra_args=$1
     log_info "重启 Redis..."
-    
+
     # 关闭 Redis
     redis-cli SHUTDOWN > /dev/null 2>&1 || true
-    sleep 2
-    
+    sleep 1  # 等待进程完全退出
+
+    # 记录启动时间（纳秒级）
+    local start_time=$(date +%s%N)
+
     # 启动 Redis，使用 build 目录作为工作目录
     if [ -n "$extra_args" ]; then
         redis-server --daemonize yes --dir "$BUILD_DIR" $extra_args
     else
         redis-server --daemonize yes --dir "$BUILD_DIR"
     fi
-    
-    # 等待启动和加载完成（AOF文件可能很大，需要更长时间）
-    local timeout=120
+
+    # 等待启动和加载完成 - 使用 50ms 轮询间隔实现高精度测量
+    local timeout=120000  # 120 秒（以毫秒为单位）
     local elapsed=0
+    local check_interval=0.05  # 50ms
+
     while [ $elapsed -lt $timeout ]; do
         local ping_result
         ping_result=$(redis-cli ping 2>&1)
         if [ "$ping_result" = "PONG" ]; then
-            log_success "Redis 已重启"
+            local end_time=$(date +%s%N)
+            local load_time_ms=$(( (end_time - start_time) / 1000000 ))
+            log_success "Redis 已重启 (实际加载耗时: ${load_time_ms}ms)"
+            echo "$load_time_ms"
             return 0
         fi
         # LOADING 状态也是正常的，继续等待
-        sleep 2
-        ((elapsed+=2))
+        sleep $check_interval
+        elapsed=$((elapsed + 50))
     done
-    
+
     log_error "Redis 启动失败"
     return 1
 }

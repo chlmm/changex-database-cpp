@@ -40,7 +40,7 @@ private:
     };
     QList<TestData> testData_;
     
-    static constexpr int TEST_COUNT = 1000;
+    static constexpr int TEST_COUNT = 10000;
     
     void saveTestData();
     bool loadTestData();
@@ -86,10 +86,10 @@ void RdbPersistenceTest::testWriteData()
             data.value = value;
             staticTestData.append(data);
         }
-        
+
         // 复制到成员变量（用于 saveTestData）
         testData_ = staticTestData;
-        
+
         // 保存到文件（只执行一次）
         saveTestData();
         

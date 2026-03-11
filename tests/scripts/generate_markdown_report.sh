@@ -95,9 +95,17 @@ generate_perf_table() {
 # 读取持久化测试结果
 RDB_RESULT="未测试"
 AOF_RESULT="未测试"
+RDB_SAVE_TIME="N/A"
+RDB_LOAD_TIME="N/A"
+AOF_SYNC_TIME="N/A"
+AOF_LOAD_TIME="N/A"
 if [ "$WITH_PERSISTENCE" = true ] && [ -f "${REPORT_DIR}/persistence_results.json" ]; then
     RDB_RESULT=$(grep -o '"rdb_result": *"[^"]*"' "${REPORT_DIR}/persistence_results.json" | cut -d'"' -f4 || echo "未知")
     AOF_RESULT=$(grep -o '"aof_result": *"[^"]*"' "${REPORT_DIR}/persistence_results.json" | cut -d'"' -f4 || echo "未知")
+    RDB_SAVE_TIME=$(grep -o '"rdb_save_time_ms": *[0-9]*' "${REPORT_DIR}/persistence_results.json" | grep -o '[0-9]*' || echo "N/A")
+    RDB_LOAD_TIME=$(grep -o '"rdb_load_time_ms": *[0-9]*' "${REPORT_DIR}/persistence_results.json" | grep -o '[0-9]*' || echo "N/A")
+    AOF_SYNC_TIME=$(grep -o '"aof_sync_time_ms": *[0-9]*' "${REPORT_DIR}/persistence_results.json" | grep -o '[0-9]*' || echo "N/A")
+    AOF_LOAD_TIME=$(grep -o '"aof_load_time_ms": *[0-9]*' "${REPORT_DIR}/persistence_results.json" | grep -o '[0-9]*' || echo "N/A")
 fi
 
 # 生成报告
@@ -118,10 +126,10 @@ if [ "$WITH_PERSISTENCE" = true ]; then
 cat >> "${REPORT_FILE}" << EOF
 ## 持久化测试
 
-| 测试项 | 结果 |
-|:-------|:-----|
-| RDB 模式 | ${RDB_RESULT} |
-| AOF 模式 | ${AOF_RESULT} |
+| 模式 | 结果 | 保存时间 | 加载时间 |
+|:-----|:-----|:---------|:---------|
+| RDB  | ${RDB_RESULT} | ${RDB_SAVE_TIME} ms | ${RDB_LOAD_TIME} ms |
+| AOF  | ${AOF_RESULT} | ${AOF_SYNC_TIME} ms | ${AOF_LOAD_TIME} ms |
 
 EOF
 fi

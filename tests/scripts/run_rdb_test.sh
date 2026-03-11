@@ -17,7 +17,7 @@ source "${SCRIPT_DIR}/lib/redis_utils.sh"
 # 测试配置
 TEST_DATA_FILE="/tmp/rdb_test_data.json"
 TEST_RESULT_FILE="/tmp/rdb_test_result.json"
-TEST_COUNT=1000
+TEST_COUNT=10000
 
 # 清理旧数据文件
 rm -f "$TEST_DATA_FILE" "$TEST_RESULT_FILE"
@@ -47,11 +47,18 @@ PERSISTENCE_TEST_DATA_FILE="$TEST_DATA_FILE" \
 KEYS_BEFORE=$(redis-cli KEYS "rdb_test_*" 2>/dev/null | wc -l | tr -d ' ')
 log_info "写入完成，共 $KEYS_BEFORE 条 key"
 
-# 触发 RDB 保存
-trigger_bgsave
+# 删除旧的 RDB 文件，确保触发真实的 BGSAVE
+RDB_FILE=$(get_rdb_file)
+rm -f "$RDB_FILE" 2>/dev/null
+
+# 触发 RDB 保存并记录时间（只捕获最后一行的时间值）
+SAVE_TIME_MS=$(trigger_bgsave 2>&1 | tail -1)
+# 检查是否是有效的数字，如果不是则设为 0
+if ! [[ "$SAVE_TIME_MS" =~ ^[0-9]+$ ]]; then
+    SAVE_TIME_MS="0"
+fi
 
 # 检查 RDB 文件
-RDB_FILE=$(get_rdb_file)
 RDB_SIZE=$(check_file "$RDB_FILE")
 if [ "$RDB_SIZE" -gt 0 ]; then
     log_success "RDB 文件已生成: $RDB_FILE ($RDB_SIZE bytes)"
@@ -61,8 +68,11 @@ else
     exit 1
 fi
 
-# 重启 Redis
-restart_redis
+# 重启 Redis 并记录加载时间（只捕获最后一行的时间值）
+LOAD_TIME_MS=$(restart_redis 2>&1 | tail -1)
+if ! [[ "$LOAD_TIME_MS" =~ ^[0-9]+$ ]]; then
+    LOAD_TIME_MS="0"
+fi
 
 # 验证数据
 log_info "验证数据完整性..."
@@ -101,6 +111,21 @@ echo ""
 
 # 清理临时文件
 rm -f "$TEST_DATA_FILE" "$TEST_RESULT_FILE"
+
+# 输出性能统计
+echo "" >&2
+echo -e "${BLUE}----------------------------------------${NC}" >&2
+echo -e "${BLUE}    RDB 性能统计${NC}" >&2
+echo -e "${BLUE}----------------------------------------${NC}" >&2
+echo -e "  保存时间: ${GREEN}${SAVE_TIME_MS}ms${NC}" >&2
+echo -e "  加载时间: ${GREEN}${LOAD_TIME_MS}ms${NC}" >&2
+echo -e "  总耗时:   ${GREEN}$((SAVE_TIME_MS + LOAD_TIME_MS))ms${NC}" >&2
+echo -e "${BLUE}----------------------------------------${NC}" >&2
+echo "" >&2
+
+# 输出时间到标准输出（供提取，不带颜色）
+echo "RDB_SAVE_TIME:${SAVE_TIME_MS}"
+echo "RDB_LOAD_TIME:${LOAD_TIME_MS}"
 
 # 返回结果
 if [ "$TEST_RESULT" = "PASS" ]; then

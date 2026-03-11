@@ -40,7 +40,7 @@ private:
     };
     QList<TestData> testData_;
     
-    static constexpr int TEST_COUNT = 1000;
+    static constexpr int TEST_COUNT = 10000;
     
     void saveTestData();
     bool loadTestData();
